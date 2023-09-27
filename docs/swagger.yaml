@@ -1,0 +1,119 @@
+info:
+  contact: {}
+paths:
+  /index:
+    get:
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      tags:
+      - 首页
+  /oneuser:
+    get:
+      parameters:
+      - description: 用户名
+        in: query
+        name: name
+        type: string
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 查询用户
+      tags:
+      - 用户模块
+  /user:
+    delete:
+      parameters:
+      - description: user-id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 注销用户
+      tags:
+      - 用户模块
+    get:
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 查询全部用户
+      tags:
+      - 用户模块
+    post:
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        type: string
+      - description: 确认密码
+        in: formData
+        name: repassword
+        type: string
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 新增用户(用户注册)
+      tags:
+      - 用户模块
+    put:
+      parameters:
+      - description: 原用户名
+        in: formData
+        name: ori_username
+        type: string
+      - description: 用户名
+        in: formData
+        name: username
+        type: string
+      - description: 密码
+        in: formData
+        name: passwd
+        type: string
+      - description: 新邮箱
+        in: formData
+        name: Email
+        type: string
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 修改用户
+      tags:
+      - 用户模块
+  /user/login:
+    post:
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        type: string
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 登录用户
+      tags:
+      - 用户模块
+swagger: "2.0"
