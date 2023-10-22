@@ -8,6 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	initTime = time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC)
+)
+
 type UserBasic struct {
 	gorm.Model
 	Name          string
@@ -30,7 +34,7 @@ func (table *UserBasic) TableName() string {
 }
 
 func GetUserList() []*UserBasic {
-	data := make([]*UserBasic, 10)
+	data := make([]*UserBasic, 0)
 	utils.DB.Find(&data)
 	for _, v := range data {
 		fmt.Println(v)
@@ -60,6 +64,9 @@ func FindUserByPhone(phone string) UserBasic {
 }
 
 func CreateUser(user UserBasic) *gorm.DB {
+	user.LoginTime = initTime
+	user.HeartbeatTime = initTime
+	user.LogoutTime = initTime
 	return utils.DB.Create(&user)
 }
 
@@ -72,5 +79,5 @@ func UpdateUser(user UserBasic, newValue string) *gorm.DB {
 }
 
 func UpdateUser2(user UserBasic) *gorm.DB {
-	return utils.DB.Model(&user).Updates(UserBasic{Passwd: user.Passwd, Name: user.Name, Email: user.Email})
+	return utils.DB.Model(&user).Updates(user)
 }

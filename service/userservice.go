@@ -21,7 +21,7 @@ import (
 // @Success 200 {string} json{"code","message"}
 // @Router /user [get]
 func GetUserList(c *gin.Context) {
-	data := make([]*models.UserBasic, 10)
+	data := make([]*models.UserBasic, 0)
 	data = models.GetUserList()
 
 	c.JSON(200, gin.H{
@@ -65,6 +65,9 @@ func FindUserByNameAndPwd(c *gin.Context) {
 		"message": "登录成功",
 		"user":    user,
 	})
+	user.LoginTime = time.Now()
+	user.IsLogout = true
+	models.UpdateUser2(user)
 }
 
 // FindUserByName

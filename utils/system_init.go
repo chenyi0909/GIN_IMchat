@@ -14,12 +14,13 @@ import (
 )
 
 var (
-	DB  *gorm.DB
-	Red *redis.Client
+	DB         *gorm.DB
+	Red        *redis.Client
+	TimeFormat = "2006-01-02 15:03:04"
 )
 
 func InitConfig() {
-	viper.SetConfigFile("E:\\workspace\\go\\GIN_IMcaht\\config\\app.yml") //必须写绝对路径
+	viper.SetConfigFile("/home/chenyi/workspace/golangProject/GIN_IMchat/config/app.yml") //必须写绝对路径
 	viper.AddConfigPath("config")
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -48,6 +49,7 @@ func InitMySQL() {
 	//user := models.UserBasic{}
 	//DB.Find(&user)
 	//fmt.Println(user)
+
 }
 
 func InitRedis() {
@@ -59,12 +61,12 @@ func InitRedis() {
 		PoolSize:     viper.GetInt("redis.poolSize"),
 		MinIdleConns: viper.GetInt("redis.minIdleConn"),
 	})
-	/*	pong, err := Red.Ping().Result()
-		if err != nil {
-			fmt.Println("init redis err:",err)
-			return
-		}*/
-	fmt.Println("init redis success")
+	pong, err := Red.Ping(context.TODO()).Result()
+	if err != nil {
+		fmt.Println("init redis err:", err)
+		os.Exit(-1)
+	}
+	fmt.Println("init redis success,pong:", pong)
 }
 
 const (
